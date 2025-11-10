@@ -20,9 +20,13 @@ def try_read_csv(file, sep_guess=";", encodings=("utf-8", "windows-1250", "cp125
     last_err = None
     for enc in encodings:
         try:
-            return pd.read_csv(file, encoding=enc, sep=sep_guess, quotechar='"')
+            df = pd.read_csv(file, encoding=enc, sep=sep_guess, quotechar='"')
+            print(f"✅ Načteno s kódováním: {enc}, oddělovač: {sep_guess}, řádků: {len(df)}")
+            return df
         except Exception as e:
+            print(f"❌ Selhalo kódování {enc}: {e}")
             last_err = e
+            file.seek(0)  # důležité — vrátí čtecí pozici na začátek pro další pokus
             continue
     raise last_err
 
