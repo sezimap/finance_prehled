@@ -20,7 +20,7 @@ def try_read_csv(file, sep_guess=";", encodings=("utf-8", "windows-1250", "cp125
     last_err = None
     for enc in encodings:
         try:
-            return pd.read_csv(file, encoding=enc, sep=sep_guess)
+            return pd.read_csv(file, encoding=enc, sep=sep_guess, quotechar='"')
         except Exception as e:
             last_err = e
             continue
